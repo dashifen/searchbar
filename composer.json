@@ -1,0 +1,23 @@
+{
+	"name": "dashifen/searchbar",
+	"description": "a class which produces a search bar to search within on-screen data",
+	"minimum-stability": "stable",
+	"type": "library",
+	"authors": [
+		{
+			"name": "David Dashifen Kees",
+			"email": "dashifen@dashifen.com",
+			"homepage": "https://dashifen.com",
+			"role": "developer"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Dashifen\\Searchbar\\": "src/"
+		}
+	},
+	"require": {
+		"php": "^7.1"
+	},
+	"license": "MIT"
+}
