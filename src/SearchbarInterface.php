@@ -51,6 +51,13 @@ interface SearchbarInterface {
 	public function addFilter(string $label, string $for, array $options, string $class = "", string $defaultText = ""): void;
 	
 	/**
+	 * @param string $label
+	 *
+	 * @return void
+	 */
+	public function addReset(string $label);
+	
+	/**
 	 * @return string
 	 */
 	public function getBar(): string;

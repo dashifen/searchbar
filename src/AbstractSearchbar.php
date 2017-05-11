@@ -2,9 +2,10 @@
 
 namespace Dashifen\Searchbar;
 
-use Dashifen\Searchbar\Elements\Filter;
 use Dashifen\Searchbar\Elements\Search;
 use Dashifen\Searchbar\Elements\Toggle;
+use Dashifen\Searchbar\Elements\Filter;
+use Dashifen\Searchbar\Elements\Reset;
 
 abstract class AbstractSearchbar implements SearchbarInterface {
 	/**
@@ -156,5 +157,16 @@ abstract class AbstractSearchbar implements SearchbarInterface {
 			</fieldset>
 			</form>
 SEARCHBAR;
+	}
+	
+	/**
+	 * @param string $label
+	 *
+	 * @return void
+	 */
+	public function addReset(string $label) {
+		$this->elements[$this->index][] = new Reset([
+			"label" => $label
+		]);
 	}
 }
