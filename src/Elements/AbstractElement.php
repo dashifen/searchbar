@@ -38,6 +38,17 @@ abstract class AbstractElement implements ElementInterface {
 	 */
 	protected $defaultText = "";
 	
+	/**
+	 * @var string type
+	 */
+	protected $type = "unknown";
+	
+	/**
+	 * AbstractElement constructor.
+	 *
+	 * @param array $options
+	 */
+	
 	public function __construct(array $options = []) {
 		foreach ($options as $field => $value) {
 			if (property_exists($this, $field)) {
@@ -83,7 +94,7 @@ abstract class AbstractElement implements ElementInterface {
 	 * @return void
 	 */
 	public function setId(string $id): void {
-		$this->id = $id . str_replace('\\', '', get_class());
+		$this->id = sprintf("%s_%s", $id, $this->type);
 	}
 	
 	/**

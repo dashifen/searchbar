@@ -11,6 +11,16 @@ class Filter extends AbstractElement {
 	protected $grouped = false;
 	
 	/**
+	 * Filter constructor.
+	 *
+	 * @param array $options
+	 */
+	public function __construct(array $options = []) {
+		parent::__construct($options);
+		$this->type = "filter";
+	}
+	
+	/**
 	 * @param array $values
 	 *
 	 * @return void

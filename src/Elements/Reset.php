@@ -4,6 +4,16 @@ namespace Dashifen\Searchbar\Elements;
 
 class Reset extends AbstractElement {
 	/**
+	 * Reset constructor.
+	 *
+	 * @param array $options
+	 */
+	public function __construct(array $options = []) {
+		parent::__construct($options);
+		$this->type = "reset";
+	}
+	
+	/**
 	 * @return string
 	 */
 	public function __toString(): string {

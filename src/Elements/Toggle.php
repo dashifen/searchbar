@@ -9,6 +9,16 @@ class Toggle extends AbstractElement {
 	protected $checked = false;
 	
 	/**
+	 * Toggle constructor.
+	 *
+	 * @param array $options
+	 */
+	public function __construct(array $options = []) {
+		parent::__construct($options);
+		$this->type = "toggle";
+	}
+	
+	/**
 	 * @param string $value
 	 */
 	public function setValue(string $value): void {
