@@ -48,7 +48,7 @@
 			// them individually with the method below.
 
 			for (var i = 0; i < rows.length; ++i) {
-				var cells = rows[i].childNodes;
+				var cells = rows[i].querySelectorAll("[data-searchbar-value]");
 				for (var j = 0; j < cells.length; ++j) {
 					this.processCell(cells[j], rows[i]);
 				}
@@ -59,47 +59,34 @@
 
 		getSearchableRows: function() {
 
-			// if our searchable element is a table, then we want to use
-			// the its body rows; otherwise, we're going to hope that our
-			// rows are marked with the appropriate class name.
+			// for maximum flexibility, we want to make sure that a developer
+			// using our searchbar can specify what should be considered a
+			// searchable row.  but, if they don't and if the searchable DOM
+			// element is a table, then we'll just use the rows in its table
+			// body by default.
 
-			return this.searchable.tagName === "TABLE"
-				? this.searchable.querySelectorAll("tbody tr")
-				: this.searchable.querySelectorAll(".searchable-row");
+			var rows = this.searchable.querySelectorAll(".searchable-row");
+			if (rows.length === 0 && this.searchable.tagName === "TABLE") {
+				rows = this.searchable.querySelectorAll("tbody tr");
+			}
+
+			return rows;
 		},
 
 		processCell: function(cell, row) {
-			var type = this.getElementType(cell);
 
-			// to process a cell, we want to add HTML5 data attributes
-			// that correspond to information extracted from the cell itself
-			// to the specified row.
+			// to process a cell, we want to add HTML5 data attributes that
+			// correspond to information extracted from the cell itself to
+			// the specified row.  this is because our search method looks
+			// at the rows when matching entries against data.
 
-			if (type !== "") {
-				var attr = "data-" + cell.getAttribute("headers");
-				var value = cell.getAttribute("data-searchbar-value");
-				row.setAttribute(attr, value);
+			var attr = "data-" + cell.getAttribute("headers");
+			var value = cell.getAttribute("data-searchbar-value");
+			row.setAttribute(attr, value);
+
+			if (cell.getAttribute("data-searchbar-value-list") === 1) {
+				row.setAttribute(attr + "-list", 1);
 			}
-		},
-
-		getElementType: function(element) {
-			var className = element.className;
-			var types = ["search", "filter", "toggle"];
-
-			// the types array are our element types.  if we find any of
-			// those in the class names for our element, then it's of that
-			// type and we return it.
-
-			for (var i = 0; i < types.length; ++i) {
-				if (className.indexOf(types[i]) !== -1) {
-					return types[i];
-				}
-			}
-
-			// otherwise, we'll return the empty string.  the calling scope
-			// will know this means that we're a failure.
-
-			return "";
 		},
 
 		getSearchbarElements: function() {
@@ -268,10 +255,14 @@
 
 			// if our row has a list flag for this attribute, then we
 			// want to see if our attribute contains the value.  otherwise,
-			// we check to see the attribute matches it.
+			// we check to see the attribute matches it.  with respect to
+			// the matches() call here, if we assume our value is 1, then
+			// we search for _1_.  this is to avoid invalid selector errors
+			// within the javascript.  further, it helps distinguish between
+			// _1_ and _11_ or _won_ and _wonder_, for example.
 
 			return row.hasAttribute(attr + "-list")
-				? row.matches("[" + attr + "~=" + value + "]")
+				? row.matches("[" + attr + "*=_" + value + "_]")
 				: row.getAttribute(attr) === value;
 		},
 
