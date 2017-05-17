@@ -2,6 +2,7 @@
 
 namespace Dashifen\Searchbar;
 
+use Dashifen\Searchbar\Elements\ElementInterface;
 use Dashifen\Searchbar\Elements\Search;
 use Dashifen\Searchbar\Elements\Toggle;
 use Dashifen\Searchbar\Elements\Filter;
@@ -126,13 +127,19 @@ abstract class AbstractSearchbar implements SearchbarInterface {
 		
 		$list_open = "<$list>";
 		$list_close = "</$list>";
-		$item_open = "<$item>";
+		$item_open = "<$item class=\"%s\">";
 		$item_close = "</$item>";
 		
 		$rows = "";
-		foreach ($this->elements as $row => $elements) {
-			$elements = $item_open . join($item_close . $item_open, $elements) . $item_close;
-			$rows .= $list_open . $elements . $list_close;
+		foreach ($this->elements as $elements) {
+			foreach ($elements as &$element) {
+				/** @var ElementInterface $element */
+				
+				$element_open = sprintf($item_open, $element->getType());
+				$element = $element_open . $element . $item_close;
+			}
+			
+			$rows .= $list_open . join("", $elements) . $list_close;
 		}
 		
 		return sprintf($this->getSearchbarFormat(), $rows);

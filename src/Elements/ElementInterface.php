@@ -11,6 +11,18 @@ interface  ElementInterface {
 	/**
 	 * @return string
 	 */
+	public function getType(): string;
+	
+	/**
+	 * @param string $type
+	 *
+	 * @return void
+	 */
+	public function setType(string $type): void;
+	
+	/**
+	 * @return string
+	 */
 	public function getId(): string;
 	
 	/**

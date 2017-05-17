@@ -4,13 +4,17 @@ namespace Dashifen\Searchbar\Elements;
 
 class Search extends AbstractElement {
 	/**
+	 * @var string
+	 */
+	protected $type = "search";
+	
+	/**
 	 * Search constructor.
 	 *
 	 * @param array $options
 	 */
 	public function __construct(array $options = []) {
 		parent::__construct($options);
-		$this->type = "search";
 	}
 	
 	/**

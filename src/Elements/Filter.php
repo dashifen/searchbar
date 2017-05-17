@@ -6,6 +6,11 @@ use Dashifen\Searchbar\SearchbarException;
 
 class Filter extends AbstractElement {
 	/**
+	 * @var string
+	 */
+	protected $type = "filter";
+	
+	/**
 	 * @var bool grouped
 	 */
 	protected $grouped = false;
@@ -16,8 +21,8 @@ class Filter extends AbstractElement {
 	 * @param array $options
 	 */
 	public function __construct(array $options = []) {
+		$this->setType("filter");
 		parent::__construct($options);
-		$this->type = "filter";
 	}
 	
 	/**

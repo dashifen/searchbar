@@ -4,6 +4,11 @@ namespace Dashifen\Searchbar\Elements;
 
 class Toggle extends AbstractElement {
 	/**
+	 * @var string
+	 */
+	protected $type = "toggle";
+	
+	/**
 	 * @var bool $checked
 	 */
 	protected $checked = false;
@@ -15,7 +20,7 @@ class Toggle extends AbstractElement {
 	 */
 	public function __construct(array $options = []) {
 		parent::__construct($options);
-		$this->type = "toggle";
+		$this->setType("toggle");
 	}
 	
 	/**
