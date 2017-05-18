@@ -3,7 +3,7 @@
 // if you use the included minimized file, we've bundled that
 // module together with this object for you.
 
-var Searchbar = Class.extend('Searchbar', {
+var Searchbar = Class.extend({
 	searchbar: null,
 	searchable: null,
 	hiddenClass: "searchable-row-hidden",
