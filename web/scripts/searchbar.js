@@ -22,7 +22,7 @@ var Searchbar = Class.extend({
 
 		// now that we know we have those, we can parse the searchable
 		// data set to prepare it for use.  it's possible that this method
-		// returns false when there are now rows within the set to work
+		// returns false when there are no rows within the set to work
 		// with.
 
 		if (!this.parseSearchable()) {
@@ -88,7 +88,7 @@ var Searchbar = Class.extend({
 		var value = cell.getAttribute("data-searchbar-value");
 		row.setAttribute(attr, value);
 
-		if (cell.getAttribute("data-searchbar-value-list") === 1) {
+		if (cell.getAttribute("data-searchbar-value-list") === "1") {
 			row.setAttribute(attr + "-list", 1);
 		}
 	},
@@ -283,10 +283,11 @@ var Searchbar = Class.extend({
 			return row.getAttribute(attr).match(pattern);
 		} catch (e) {
 
-			// if we catch our exception, we do nothing.  we
-			// could add a return statement here, but it's the
-			// end of the function already.
+			// if we couldn't even make our pattern, then we'll assume
+			// that whatever we have could not be matched and return
+			// false.
 
+			return false;
 		}
 	},
 
