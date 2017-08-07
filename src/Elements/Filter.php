@@ -41,7 +41,8 @@ class Filter extends AbstractElement {
 		$depth = $this->getArrayDepth($values);
 		
 		if ($depth !== 1 && $depth !== 2) {
-			throw new SearchbarException('Values too "deep" for filtering');
+			throw new SearchbarException('Values too "deep" for filtering',
+				SearchbarException::VALUES_TOO_DEEP);
 		}
 		
 		$this->grouped = $depth === 2;
@@ -151,7 +152,8 @@ class Filter extends AbstractElement {
 		$temp = [];
 		$format = $this->getOptionFormat();
 		foreach ($options as $value => $display) {
-			$option = sprintf($format, $value, $display);
+			list($title, $text) = $this->getOptionDisplay($display);
+			$option = sprintf($format, $value, $title, $text);
 			
 			// if the value for this option matches the value that should
 			// be selected at this time, then we'll want to add the selected
@@ -170,13 +172,50 @@ class Filter extends AbstractElement {
 	}
 	
 	protected function getOptionFormat(): string {
+		return '<option value="%s" title="%s">%s</option>';
+	}
+	
+	/**
+	 * @param string $display
+	 *
+	 * @return array
+	 * @throws SearchbarException
+	 */
+	protected function getOptionDisplay(string $display): array {
 		
-		// to avoid PHPStorm warning us about a lone %s within the
-		// <option> tag missing an attribute, we'll not worry about a
-		// sprintf() variable for our selected property.  that'll just
-		// get handled above.
+		// usually, we just have the text for our option in $display.
+		// but, sometimes we get a JSON string with a title and text for
+		// it.  here we determine which is which.
 		
-		return '<option value="%s">%s</option>';
+		$temp = json_decode($display, true);
+		if (json_last_error() === JSON_ERROR_NONE) {
+			
+			// then we'd better have a title and text within our $temp
+			// array.  if not, we'll throw Exceptions.
+			
+			if (!isset($temp["title"])) {
+				throw new SearchbarException("Option title missing",
+					SearchbarException::MISSING_OPTION_TITLE);
+			}
+			
+			if (!isset($temp["text"])) {
+				throw new SearchbarException("Option text missing",
+					SearchbarException::MISSING_OPTION_TEXT);
+			}
+		} else {
+			
+			// if we didn't have JSON, then we'll create an array with
+			// the information we did get here.  this, then, matches what
+			// we would have created via JSON so that our return statement
+			// is easy.
+			
+			$temp = [
+				"text"  => $display,
+				"title" => "",
+			];
+		}
+		
+		return [ $temp["title"], $temp["text"] ];
 	}
 	
 	protected function getOptionSeparator(): string {
@@ -206,6 +245,14 @@ class Filter extends AbstractElement {
 		return join($this->getOptionGroupSeparator(), $groups);
 	}
 	
+	protected function getOptionGroupFormat(): string {
+		
+		// option groups are simple: a label and a space for the options
+		// they contain:
+		
+		return '<optgroup label="%s">%s</optgroup>';
+	}
+	
 	protected function getOptionGroupSeparator(): string {
 		
 		// like the option separator function above, this one is here
@@ -213,13 +260,5 @@ class Filter extends AbstractElement {
 		// for filters can alter this in a simple way.
 		
 		return '';
-	}
-	
-	protected function getOptionGroupFormat(): string {
-		
-		// option groups are simple: a label and a space for the options
-		// they contain:
-		
-		return '<optgroup label="%s">%s</optgroup>';
 	}
 }
