@@ -188,7 +188,7 @@ class Filter extends AbstractElement {
 		// it.  here we determine which is which.
 		
 		$temp = json_decode($display, true);
-		if (json_last_error() === JSON_ERROR_NONE) {
+		if (json_last_error() === JSON_ERROR_NONE && !is_numeric($display)) {
 			
 			// then we'd better have a title and text within our $temp
 			// array.  if not, we'll throw Exceptions.
