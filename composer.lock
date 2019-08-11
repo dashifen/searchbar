@@ -1,27 +1,27 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e014c0db355af7f5dbaf21c51411b7d",
+    "content-hash": "1ae771291f6d93b9810e052509c5443d",
     "packages": [
         {
             "name": "dashifen/exception",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dashifen/exception.git",
-                "reference": "51b3679dd77147bd0e31a3071125d3a9295cd88d"
+                "reference": "7e388534a73e8021bf4cc49e8656fa42497da212"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dashifen/exception/zipball/51b3679dd77147bd0e31a3071125d3a9295cd88d",
-                "reference": "51b3679dd77147bd0e31a3071125d3a9295cd88d",
+                "url": "https://api.github.com/repos/dashifen/exception/zipball/7e388534a73e8021bf4cc49e8656fa42497da212",
+                "reference": "7e388534a73e8021bf4cc49e8656fa42497da212",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": "7.3.*"
             },
             "type": "library",
             "autoload": {
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "a base class for exceptions in Dashifen's other work",
-            "time": "2017-06-01T13:18:01+00:00"
+            "time": "2019-06-15T02:55:25+00:00"
         }
     ],
     "packages-dev": [],
@@ -52,7 +52,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1"
+        "php": "7.3.*"
     },
     "platform-dev": []
 }
