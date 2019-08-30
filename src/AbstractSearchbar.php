@@ -27,6 +27,18 @@ abstract class AbstractSearchbar implements SearchbarInterface {
   abstract public function parse (array $data): string;
 
   /**
+   * getElements
+   *
+   * Gets the elements property.
+   *
+   * @return array
+   */
+  public function getElements (): array {
+    return $this->elements;
+  }
+
+
+  /**
    *
    */
   public function addRow (): void {

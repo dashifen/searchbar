@@ -8,6 +8,15 @@ namespace Dashifen\Searchbar;
  * @package Dashifen\Searchbar
  */
 interface SearchbarInterface {
+  /**
+   * getElements
+   *
+   * Gets the elements property.
+   *
+   * @return array
+   */
+  public function getElements(): array;
+
 	/**
    * parse
    *
