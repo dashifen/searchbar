@@ -37,7 +37,6 @@ abstract class AbstractSearchbar implements SearchbarInterface {
     return $this->elements;
   }
 
-
   /**
    *
    */
